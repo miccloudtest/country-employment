@@ -101,10 +101,7 @@ public class ExcelServiceImpl implements IExcelService {
             country.setCountryName(key);
             value.forEach(state -> {
                 if (isValidCountryState.test(key, state.getStateName()) && isNotNull.test(state.getNoOfEmployed())) {
-                    /* if (isNotNull.test(state.getNoOfEmployed())) {
-                     */
                     state.setEmploymentRate((double) state.getPopulation() / state.getNoOfEmployed());
-                    /*}*/
                     state.setCountry(country);
                     country.getStates().add(state);
                 } else {
