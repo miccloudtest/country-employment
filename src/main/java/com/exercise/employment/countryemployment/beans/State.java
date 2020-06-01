@@ -53,8 +53,6 @@ public class State implements Serializable {
 
     @Column(name = "Employment_Rate")
     private Double employmentRate;
-    /*@Column(name = "last_updated_ts")
-    private Date lastUpdatedTs;*/
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "country", nullable = false)
     @JsonIgnore
