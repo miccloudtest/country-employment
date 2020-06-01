@@ -32,7 +32,6 @@ public class ExcelController {
             responseEntity = ResponseEntity.status(HttpStatus.OK).body(responseMessage);
             logger.info("Requested proceed successfully filename {}", file.getOriginalFilename());
         } catch (Exception ex) {
-            ex.printStackTrace();
             logger.error("Error while uploading file {}", ex.getMessage());
             responseMessage = ResponseMessage.builder().message(SERVER_ERROR).statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build();
             responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMessage);
