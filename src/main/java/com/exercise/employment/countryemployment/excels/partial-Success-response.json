@@ -1,0 +1,483 @@
+{
+  "statusCode": 200,
+  "message": "Partial file uploaded successfully.",
+  "invalidRecords": [
+    {
+      "stateName": "hollywood",
+      "population": 27743338,
+      "noOfEmployed": 10399146,
+      "area": 50362,
+      "isDeleted": "N",
+      "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+      "employmentRate": null,
+      "associatedCountry": "India"
+    }
+  ],
+  "insertedRecords": [
+    {
+      "countryName": "Pakistan",
+      "states": [
+        {
+          "stateName": "Rawalpindi",
+          "population": 546400,
+          "noOfEmployed": 40000,
+          "area": 78438,
+          "isDeleted": "Y",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 13.66,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Karachi",
+          "population": 657200,
+          "noOfEmployed": 2000,
+          "area": 275045,
+          "isDeleted": "Y",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 328.6,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Lohore",
+          "population": 453636,
+          "noOfEmployed": 30000,
+          "area": 83743,
+          "isDeleted": "Y",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 15.1212,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "State-A",
+          "population": 500,
+          "noOfEmployed": 50,
+          "area": 94163,
+          "isDeleted": "Y",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 10,
+          "associatedCountry": null
+        }
+      ]
+    },
+    {
+      "countryName": "Nepal",
+      "states": [
+        {
+          "stateName": "Lumbini Pradesh",
+          "population": 56575757,
+          "noOfEmployed": 4005678,
+          "area": 78438,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 14.123890387594809,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Gandaki Pradesh",
+          "population": 8900000,
+          "noOfEmployed": 670008,
+          "area": 83743,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 13.283423481510669,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Sudurpashchim Pradesh",
+          "population": 345678,
+          "noOfEmployed": 345678,
+          "area": 83743,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 1,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Koshi Pradesh",
+          "population": 80000,
+          "noOfEmployed": 20000,
+          "area": 83743,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 4,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Madesh",
+          "population": 5000000,
+          "noOfEmployed": 40000,
+          "area": 78438,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 125,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Karnali Pradesh",
+          "population": 56879,
+          "noOfEmployed": 20000,
+          "area": 94163,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.84395,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Bagmati Pradesh",
+          "population": 340000,
+          "noOfEmployed": 70000,
+          "area": 94163,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 4.857142857142857,
+          "associatedCountry": null
+        }
+      ]
+    },
+    {
+      "countryName": "India",
+      "states": [
+        {
+          "stateName": "Uttar Pradesh",
+          "population": 199812341,
+          "noOfEmployed": 44495063,
+          "area": 240928,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 4.4906631776204025,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "West Bengal",
+          "population": 91276115,
+          "noOfEmployed": 29093002,
+          "area": 88752,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 3.137390737470131,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Puducherry",
+          "population": 1247953,
+          "noOfEmployed": 852753,
+          "area": 490,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 1.4634401755256212,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Manipur",
+          "population": 2855794,
+          "noOfEmployed": 834154,
+          "area": 22327,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 3.4235812571779314,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Tamil Nadu",
+          "population": 72147030,
+          "noOfEmployed": 34917440,
+          "area": 130060,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.066217626492664,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Daman  Diu",
+          "population": 243247,
+          "noOfEmployed": 182851,
+          "area": 111,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 1.3303017210734422,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Maharashtra",
+          "population": 112374333,
+          "noOfEmployed": 50818259,
+          "area": 307713,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.2112983642355792,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Himachal Pradesh",
+          "population": 6864602,
+          "noOfEmployed": 688552,
+          "area": 55673,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 9.969620304639301,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Tripura",
+          "population": 3673917,
+          "noOfEmployed": 961453,
+          "area": 10486,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 3.821213309438943,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Odisha",
+          "population": 41974218,
+          "noOfEmployed": 7003656,
+          "area": 155707,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 5.993186701345697,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Arunachal Pradesh",
+          "population": 1383727,
+          "noOfEmployed": 317369,
+          "area": 83743,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 4.359994202332301,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Lakshadweep",
+          "population": 64473,
+          "noOfEmployed": 50332,
+          "area": 30,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 1.280954462369864,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Nagaland",
+          "population": 1978502,
+          "noOfEmployed": 570966,
+          "area": 16579,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 3.4651835660967554,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Meghalaya",
+          "population": 2966889,
+          "noOfEmployed": 595450,
+          "area": 22429,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 4.982599714501638,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Chandigarh",
+          "population": 1055450,
+          "noOfEmployed": 1026459,
+          "area": 114,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 1.0282436999432027,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Sikkim",
+          "population": 610577,
+          "noOfEmployed": 153578,
+          "area": 7096,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 3.9756801104324837,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Karnataka",
+          "population": 61095297,
+          "noOfEmployed": 23625962,
+          "area": 191791,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.5859390191180363,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Jammu Kashmir",
+          "population": 12541302,
+          "noOfEmployed": 3433242,
+          "area": 222236,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 3.652903582095291,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Mizoram",
+          "population": 1097206,
+          "noOfEmployed": 571771,
+          "area": 21081,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 1.9189605628826925,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Chhattisgarh",
+          "population": 25545198,
+          "noOfEmployed": 5937237,
+          "area": 135192,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 4.302539716706609,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Dadar Nagar Haveli",
+          "population": 343709,
+          "noOfEmployed": 160595,
+          "area": 491,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.1402222983280925,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Andhra Pradesh",
+          "population": 84580777,
+          "noOfEmployed": 28219075,
+          "area": 275045,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.9972909104922825,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Jharkhand",
+          "population": 32988134,
+          "noOfEmployed": 7933061,
+          "area": 79716,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 4.1583108966387625,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Kerala",
+          "population": 33406061,
+          "noOfEmployed": 15934926,
+          "area": 38852,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.0964051543132363,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Madhya Pradesh",
+          "population": 72626809,
+          "noOfEmployed": 20069405,
+          "area": 308252,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 3.6187823704788458,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Andman Nicobar",
+          "population": 380581,
+          "noOfEmployed": 143488,
+          "area": 8249,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.652354203835861,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Bihar",
+          "population": 104099452,
+          "noOfEmployed": 11758016,
+          "area": 94163,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 8.853487867340885,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Delhi",
+          "population": 16787941,
+          "noOfEmployed": 16368899,
+          "area": 1483,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 1.0255998891556481,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Rajasthan",
+          "population": 68548437,
+          "noOfEmployed": 17048085,
+          "area": 342239,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 4.020887800594612,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Haryana",
+          "population": 25351462,
+          "noOfEmployed": 8842103,
+          "area": 44212,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.8671303648012243,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Uttarakhand",
+          "population": 10086292,
+          "noOfEmployed": 3049338,
+          "area": 53483,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 3.3076989169452515,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Goa",
+          "population": 1458545,
+          "noOfEmployed": 906814,
+          "area": 3702,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 1.608427968690382,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Gujarat",
+          "population": 60439692,
+          "noOfEmployed": 25745083,
+          "area": 196244,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 2.347620786462409,
+          "associatedCountry": null
+        },
+        {
+          "stateName": "Assam",
+          "population": 31205576,
+          "noOfEmployed": 4398542,
+          "area": 78438,
+          "isDeleted": "N",
+          "lastUpdatedTs": "2019-12-24T18:30:00.000+00:00",
+          "employmentRate": 7.094527231978232,
+          "associatedCountry": null
+        }
+      ]
+    }
+  ]
+}
