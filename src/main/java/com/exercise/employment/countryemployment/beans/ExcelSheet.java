@@ -12,7 +12,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExcelSheet implements Serializable {
+public class ExcelSheet<R> implements Serializable {
     private static final long serialVersionUID = -5136679304429296791L;
     @ExcelColumn(name = "Country")
     private String countryName;
