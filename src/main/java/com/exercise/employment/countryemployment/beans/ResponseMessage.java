@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -16,6 +15,6 @@ public class ResponseMessage implements Serializable {
     private Integer statusCode;
     private String message;
 
-    private Set<State> invalidRecords;
-    private List<Country> insertedRecords;
+    private List<ExcelSheet> invalidRecords;
+    private List<ExcelSheet> insertedRecords;
 }

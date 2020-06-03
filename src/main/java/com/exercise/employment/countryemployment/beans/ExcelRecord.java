@@ -5,12 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
 @EqualsAndHashCode
 public class ExcelRecord {
-    private List<Country> validRecords;
-    private Set<State> invalidStateSet;
+    private List<ExcelSheet> validRecords;
+    private List<ExcelSheet> inValidRecords;
 }

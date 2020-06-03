@@ -2,10 +2,7 @@ package com.exercise.employment.countryemployment.beans;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -14,11 +11,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CountryStateMaster")
 @ToString
-@IdClass(CountryStateId.class)
-public class CountryStateMaster {
+
+public class CountryStateMapping {
     private static final long serialVersionUID = -7897700658518315266L;
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CTM_SEQ")
+    @SequenceGenerator(sequenceName = "country_state_map_seq", allocationSize = 1, name = "CTM_SEQ")
+    private Integer id;
     private String countryName;
-    @Id
+    @Column(unique = true)
     private String stateName;
 }
