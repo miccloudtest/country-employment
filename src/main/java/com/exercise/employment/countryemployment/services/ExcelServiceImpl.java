@@ -146,19 +146,11 @@ public class ExcelServiceImpl implements IExcelService {
             String statusMsg = (excelRecord.getValidRecords().size() > 0 && excelRecord.getInValidRecords().size() == 0)
                     ? SUCCESS_MSG : (excelRecord.getValidRecords().size() == 0 && excelRecord.getInValidRecords().size() != 0)
                     ? FILE_UPLOAD_FAIL_MSG : PARTIAL_SUCCESS_MSG;
-
-            //String statusMsg = (excelRecord.getValidRecords().size() > 0 && excelRecord.getInValidRecords().size() > 0) ? PARTIAL_SUCCESS_MSG : SUCCESS_MSG;
             response = ResponseMessage.builder().message(statusMsg).statusCode(HttpStatus.OK.value()).invalidRecords(excelRecord.getInValidRecords()).insertedRecords(excelRecord.getValidRecords()).build();
         } else {
             response = ResponseMessage.builder().message(FILE_ERR_MSG).statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build();
         }
         return response;
-    }
-
-    private String getStatusMsg(ExcelRecord excelRecord) {
-
-        String statusMsg = (excelRecord.getValidRecords().size() > 0 && excelRecord.getInValidRecords().size() == 0) ? SUCCESS_MSG : (excelRecord.getValidRecords().size() == 0 && excelRecord.getInValidRecords().size() != 0) ? FILE_UPLOAD_FAIL_MSG : PARTIAL_SUCCESS_MSG;
-        return "";
     }
 
 }

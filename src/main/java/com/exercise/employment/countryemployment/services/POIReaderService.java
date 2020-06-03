@@ -1,7 +1,6 @@
 package com.exercise.employment.countryemployment.services;
 
 import com.exercise.employment.countryemployment.annotations.ExcelColumn;
-import com.exercise.employment.countryemployment.beans.ExcelSheet;
 import com.exercise.employment.countryemployment.beans.ExcelSheetDescriptor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -23,11 +22,11 @@ import java.util.List;
 public class POIReaderService<R> {
     Logger logger = LoggerFactory.getLogger(POIReaderService.class);
 
-    public List<ExcelSheet> readFile(InputStream inputStream, Class<R> bean) throws Exception {
-        List<ExcelSheet> rows = null;
+    public List<R> readFile(InputStream inputStream, Class<R> bean) throws Exception {
+        List<R> rows = null;
         try {
-            ExcelSheetDescriptor<ExcelSheet> sheetDescriptor = new ExcelSheetDescriptor<>(ExcelSheet.class);
-            rows = readSheet(inputStream, sheetDescriptor);
+            ExcelSheetDescriptor<R> sheetDescriptor = new ExcelSheetDescriptor<>(bean);
+            rows = readSheet(inputStream,sheetDescriptor );
         } catch (InstantiationException | IllegalAccessException | IOException e) {
             logger.error("Error in file read operation {}", e.getMessage());
             throw e;
