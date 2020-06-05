@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,4 +13,6 @@ import java.util.List;
 public class ExcelRecord {
     private List<ExcelSheet> validRecords;
     private List<ExcelSheet> inValidRecords;
+    private List<ExcelSheet> insertRecords;
+    private List<ExcelSheet> updateRecords;
 }

@@ -2,8 +2,7 @@ package com.exercise.employment.countryemployment.services;
 
 import com.exercise.employment.countryemployment.Cache.CountryStateCache;
 import com.exercise.employment.countryemployment.beans.*;
-import com.exercise.employment.countryemployment.repository.CountryRepository;
-import com.exercise.employment.countryemployment.repository.CountryStateRepository;
+import com.exercise.employment.countryemployment.repository.IExcelRepository;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -15,7 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -25,10 +28,6 @@ import java.util.stream.Collectors;
 public class ExcelServiceImpl implements IExcelService {
 
     Logger logger = LoggerFactory.getLogger(ExcelServiceImpl.class);
-    @Autowired
-    CountryStateRepository excelRepository;
-    @Autowired
-    CountryRepository countryRepository;
     @Autowired
     POIReaderService poiReaderService;
     @Value("${app.file.upload.success.message}")
@@ -40,7 +39,8 @@ public class ExcelServiceImpl implements IExcelService {
 
     @Value("${app.file.upload.fail.message}")
     public String FILE_UPLOAD_FAIL_MSG;
-
+    @Autowired
+    private IExcelRepository excelRepository;
 
     @Autowired
     CountryStateCache countryStateCache;
@@ -51,10 +51,19 @@ public class ExcelServiceImpl implements IExcelService {
 
     Predicate<Long> isNotNull = var -> var != null && var != 0;
 
-    BiPredicate<String, String> isValidCountryState = (country, state) -> {
-        Set<String> states = countryStateCache.countryStateMap.get(country);
-        return states != null ? states.contains(state) : false;
+    BiFunction<String, String, CountryStateMapping> getCountryStateMapping = (countryName, stateName) -> {
+        List<CountryStateMapping> states = countryStateCache.countryStateMap.get(countryName.trim());
+        CountryStateMapping countryStateMapping = null;
+        if (states != null) {
+            countryStateMapping = states.stream().filter(state -> state.getStateName().trim().equalsIgnoreCase(stateName.trim())).findAny().orElse(null);
+        }
+        return countryStateMapping;
     };
+    BiPredicate<String, String> isValidCountryState = (country, state) -> {
+        CountryStateMapping countryState = getCountryStateMapping.apply(country, state);
+        return countryState != null ? countryState.getStateName().equalsIgnoreCase(state.trim()) : false;
+    };
+
 
     Function<MultipartFile, Workbook> getWorkBook = file -> {
         Workbook workbook = null;
@@ -71,78 +80,53 @@ public class ExcelServiceImpl implements IExcelService {
         return workbook;
     };
 
-    private void saveOrUpdate(Map<String, Set<State>> entities) throws Exception {
-        try {
-            entities.forEach((key, value) -> {
-                Country country = Country.builder().country(key).build();
-                value.forEach(state -> {
-                    state.setCountry(country);
-                });
-                country.setStates(value);
-                countryRepository.save(country);
-            });
-        } catch (Exception ex) {
-            logger.error("Error while storing records to oracle {}", ex.getMessage());
-            throw ex;
-        }
-    }
 
-    private Map<String, Set<State>> prepareMapping(List<ExcelSheet> records) {
-        Map<String, Set<State>> countryStateMap = new HashMap<>();
-        List<Country> country = new ArrayList<>();
-        try {
-            logger.info("Inserting record to database {}", records.size());
-            records.forEach(record -> {
-                if (countryStateMap.containsKey(record.getCountryName())) {
-                    State stateNew = State.builder().stateName(record.getStateName()).
-                            area(record.getArea()).isDeleted(record.getIsDeleted()).
-                            lastUpdatedTs(record.getLastUpdatedTs()).
-                            noOfEmployed(record.getNoOfEmployed()).
-                            population(record.getPopulation()).build();
-                    countryStateMap.get(record.getCountryName()).add(stateNew);
-                } else {
-
-                    State stateNew = State.builder().stateName(record.getStateName()).
-                            area(record.getArea()).isDeleted(record.getIsDeleted()).
-                            lastUpdatedTs(record.getLastUpdatedTs()).
-                            noOfEmployed(record.getNoOfEmployed()).
-                            population(record.getPopulation()).build();
-                    Set<State> states = new HashSet<State>();
-                    states.add(stateNew);
-                    countryStateMap.put(record.getCountryName(), states);
-                }
-            });
-
-        } catch (Exception ex) {
-            logger.error("Error while mapping country state records {}", ex.getMessage());
-            throw ex;
-        }
-        return countryStateMap;
-    }
-
-
-    private ExcelRecord processExcelData(List<ExcelSheet> excelRecords) throws Exception {
-        List<ExcelSheet> validList = excelRecords.stream().filter(record -> isNotNull.test(record.getNoOfEmployed()) && isValidCountryState.test(record.getCountryName().trim(), record.getStateName().trim())).
+    private ExcelRecord processExcelData(List<ExcelSheet> excelRecords, User user) throws Exception {
+        List<ExcelSheet> validList = excelRecords.stream().filter(record -> isNotNull.test(record.getStateNumOfEmployed()) && isValidCountryState.test(record.getCountryName().trim(), record.getStateName().trim())).
                 map(record -> {
-                    record.setEmploymentRate((double) record.getPopulation() / record.getNoOfEmployed());
+                    record.setEmploymentRate((double) record.getStatePopulation() / record.getStateNumOfEmployed());
+                    record.setCreated_by(user.getEmail());
+                    record.setModified_by(user.getEmail());
+                    record.setCreated_ts(new Date());
+                    record.setModified_ts(new Date());
+                    CountryStateMapping countryStateMapping = getCountryStateMapping.apply(record.getCountryName(), record.getStateName());
+                    record.setStateId(countryStateMapping.getStateId());
+                    record.setCountryId(countryStateMapping.getCountryId());
                     return record;
                 }).collect(Collectors.toList());
         List<ExcelSheet> invalidList = excelRecords.stream()
-                .filter(record -> !(isNotNull.test(record.getNoOfEmployed()) && isValidCountryState.test(record.getCountryName().trim(), record.getStateName().trim())))
+                .filter(record -> !(isNotNull.test(record.getStateNumOfEmployed()) && isValidCountryState.test(record.getCountryName().trim(), record.getStateName().trim())))
                 .collect(Collectors.toList());
+        Set<Integer> stateName = validList.stream().map(ExcelSheet::getStateId).collect(Collectors.toSet());
         ExcelRecord excelRecord = ExcelRecord.builder().validRecords(validList).inValidRecords(invalidList).build();
+        doListPartion(validList, stateName, excelRecord);
         return excelRecord;
+    }
+
+    private void doListPartion(List<ExcelSheet> insertRecord, Set<Integer> stateName, ExcelRecord excelRecord) {
+        Map<Integer, Integer> exisStatecountryIdMap = excelRepository.getExistingCountryStateId(stateName);
+        Map<Boolean, List<ExcelSheet>> recordList = insertRecord.stream()
+                .collect(Collectors.groupingBy(record -> exisStatecountryIdMap.containsKey(record.getStateId())));
+        List<ExcelSheet> updateRecords = recordList.get(true);
+        List<ExcelSheet> insertRecords = recordList.get(false);
+        if (insertRecords != null) {
+            excelRecord.setInsertRecords(insertRecords);
+        }
+        if (updateRecords != null) {
+            excelRecord.setUpdateRecords(updateRecords);
+        }
+
     }
 
 
     @Override
-    public ResponseMessage processFile(MultipartFile multipartFile) throws Exception {
+    public ResponseMessage processFile(MultipartFile multipartFile, User user) throws Exception {
         ResponseMessage response = null;
         if (isXls.or(isXlsx).test(multipartFile)) {
             List<ExcelSheet> list = poiReaderService.readFile(multipartFile.getInputStream(), ExcelSheet.class);
-            ExcelRecord excelRecord = processExcelData(list);
-            Map<String, Set<State>> map = prepareMapping(excelRecord.getValidRecords());
-            saveOrUpdate(map);
+            ExcelRecord excelRecord = processExcelData(list, user);
+            excelRepository.insertBatchExecute(excelRecord.getInsertRecords());
+            excelRepository.updateBatchExecute(excelRecord.getUpdateRecords());
             String statusMsg = (excelRecord.getValidRecords().size() > 0 && excelRecord.getInValidRecords().size() == 0)
                     ? SUCCESS_MSG : (excelRecord.getValidRecords().size() == 0 && excelRecord.getInValidRecords().size() != 0)
                     ? FILE_UPLOAD_FAIL_MSG : PARTIAL_SUCCESS_MSG;

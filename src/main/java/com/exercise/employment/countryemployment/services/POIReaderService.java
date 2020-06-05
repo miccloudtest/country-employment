@@ -26,7 +26,7 @@ public class POIReaderService<R> {
         List<R> rows = null;
         try {
             ExcelSheetDescriptor<R> sheetDescriptor = new ExcelSheetDescriptor<>(bean);
-            rows = readSheet(inputStream,sheetDescriptor );
+            rows = readSheet(inputStream, sheetDescriptor);
         } catch (InstantiationException | IllegalAccessException | IOException e) {
             logger.error("Error in file read operation {}", e.getMessage());
             throw e;

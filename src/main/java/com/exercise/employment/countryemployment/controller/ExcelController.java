@@ -1,7 +1,9 @@
 package com.exercise.employment.countryemployment.controller;
 
 import com.exercise.employment.countryemployment.beans.ResponseMessage;
+import com.exercise.employment.countryemployment.beans.User;
 import com.exercise.employment.countryemployment.services.IExcelService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,12 @@ public class ExcelController {
 
     @PostMapping("upload")
     @ResponseBody
-    public ResponseEntity<ResponseMessage> uploadExcel(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<ResponseMessage> uploadExcel(@RequestParam("user") String userData, @RequestParam("file") MultipartFile file) {
         ResponseMessage responseMessage;
         ResponseEntity responseEntity;
         try {
-            responseMessage = excelService.processFile(file);
+            User user  = new ObjectMapper().readValue(userData, User.class);
+            responseMessage = excelService.processFile(file,user);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body(responseMessage);
             logger.info("Requested proceed successfully filename {}", file.getOriginalFilename());
         } catch (Exception ex) {
