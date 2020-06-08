@@ -1,4 +1,4 @@
-package com.exercise.employment.countryemployment.Cache;
+package com.exercise.employment.countryemployment.cache;
 
 import com.exercise.employment.countryemployment.beans.CountryStateIDMaster;
 import com.exercise.employment.countryemployment.repositories.repository.CountryRepository;
