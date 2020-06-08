@@ -4,6 +4,7 @@ import com.exercise.employment.countryemployment.Cache.CountryCacheInitializer;
 import com.exercise.employment.countryemployment.beans.*;
 import com.exercise.employment.countryemployment.repositories.repository.CountryRepository;
 import com.exercise.employment.countryemployment.services.service.CountryService;
+import com.exercise.employment.countryemployment.services.service.PoiReaderService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,7 +31,7 @@ public class CountryServiceImpl implements CountryService {
 
     Logger logger = LoggerFactory.getLogger(CountryServiceImpl.class);
     @Autowired
-    PoiReaderServiceImpl poiReaderService;
+    private PoiReaderService poiReaderService;
     @Value("${app.file.upload.success.message}")
     public String SUCCESS_MSG;
     @Value("${app.file.type.error.message}")
