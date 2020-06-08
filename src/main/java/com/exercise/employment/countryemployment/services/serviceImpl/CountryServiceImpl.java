@@ -29,13 +29,13 @@ public class CountryServiceImpl implements CountryService {
     Logger logger = LoggerFactory.getLogger(CountryServiceImpl.class);
     @Autowired
     private PoiReaderService poiReaderService;
-    @Value("${app.file.upload.success.message}")
+    @Value("${app.file.upload.message.success}")
     public String SUCCESS_MSG;
-    @Value("${app.file.type.error.message}")
+    @Value("${app.file.upload.message.fileTypeError}")
     public String FILE_ERR_MSG;
-    @Value("${app.file.upload.partial.success.message}")
+    @Value("${app.file.upload.message.partialSuccess}")
     public String PARTIAL_SUCCESS_MSG;
-    @Value("${app.file.upload.fail.message}")
+    @Value("${app.file.upload.message.fail}")
     public String FILE_UPLOAD_FAIL_MSG;
     @Autowired
     private CountryRepository countryRepository;

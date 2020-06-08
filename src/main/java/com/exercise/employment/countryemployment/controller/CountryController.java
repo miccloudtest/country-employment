@@ -23,7 +23,7 @@ public class CountryController {
     @Autowired
     CountryService countryService;
 
-    @Value("${app.file.upload.internal.server.error}")
+    @Value("${app.file.upload.message.internalServerError}")
     private String SERVER_ERROR;
 
 

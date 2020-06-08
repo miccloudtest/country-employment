@@ -1,0 +1,28 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /country-employment
+
+
+# Oracle configuration
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: gauri
+    password: admin
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 5
+
+
+
+app:
+  file:
+    upload:
+      message:
+        fileTypeError: Invalid file type,Acceptable file format are xls or xlsx.
+        success: File uploaded successfully.
+        fail: Partial file uploaded successfully.
+        partialSuccess: Partial file uploaded successfully.
+        internalServerError: Error occurred while processing file.
