@@ -19,7 +19,7 @@ public class CountryCacheInitializer {
 
     @PostConstruct
     public void init() {
-        List<CountryStateIDMaster> data = (List<CountryStateIDMaster>) countryRepository.loadCountryStateCache();
+        List<CountryStateIDMaster> data = countryRepository.loadCountryStateCache();
         countryStateCache =data.stream()
                 .collect(Collectors.groupingBy(CountryStateIDMaster::getCountryName));
     }

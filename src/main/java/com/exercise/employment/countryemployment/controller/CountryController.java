@@ -5,7 +5,6 @@ import com.exercise.employment.countryemployment.beans.ResponseMessage;
 import com.exercise.employment.countryemployment.beans.User;
 import com.exercise.employment.countryemployment.services.service.CountryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.catalina.LifecycleState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("excel")
+@RequestMapping("/")
 public class CountryController {
     Logger logger = LoggerFactory.getLogger(CountryController.class);
     @Autowired
@@ -28,16 +27,17 @@ public class CountryController {
     private String SERVER_ERROR;
 
 
-    @PostMapping("upload")
+    @PostMapping("excelupload")
     @ResponseBody
+
     public ResponseEntity<ResponseMessage> uploadExcel(@RequestParam("user") String userData, @RequestParam("file") MultipartFile file) {
         ResponseMessage responseMessage;
         ResponseEntity responseEntity;
         try {
-            User user  = new ObjectMapper().readValue(userData, User.class);
-            responseMessage = countryService.processFile(file,user);
+            User user = new ObjectMapper().readValue(userData, User.class);
+            responseMessage = countryService.processFile(file, user);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body(responseMessage);
-            logger.info("Requested proceed successfully filename {}", file.getOriginalFilename());
+            logger.info("Requested process status for file {} ,{}", file.getOriginalFilename(),responseMessage.getMessage());
         } catch (Exception ex) {
             logger.error("Error while uploading file {}", ex.getMessage());
             responseMessage = ResponseMessage.builder().message(SERVER_ERROR).statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build();
@@ -46,9 +46,12 @@ public class CountryController {
         return responseEntity;
 
     }
-    //in progress for now dont review report generation functionality
-    public ResponseEntity getCountriesData(){
-        List<CountryData> countryData=null;
+
+    @GetMapping("countries")
+    @ResponseBody
+    public ResponseEntity getCountriesData() {
+        List<CountryData> countryData = countryService.getCountriesData();
+        logger.info("Request process successfully");
         return ResponseEntity.status(HttpStatus.OK).body(countryData);
     }
 

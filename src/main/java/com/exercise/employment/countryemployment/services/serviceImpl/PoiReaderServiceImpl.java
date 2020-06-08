@@ -3,17 +3,14 @@ package com.exercise.employment.countryemployment.services.serviceImpl;
 import com.exercise.employment.countryemployment.annotations.ExcelColumn;
 import com.exercise.employment.countryemployment.beans.ExcelSheetDescriptor;
 import com.exercise.employment.countryemployment.services.service.PoiReaderService;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.exercise.employment.countryemployment.utils.excel.ExcelUtil;
+import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,35 +20,24 @@ import java.util.List;
 public class PoiReaderServiceImpl<R> implements PoiReaderService {
     Logger logger = LoggerFactory.getLogger(PoiReaderServiceImpl.class);
 
+
     @Override
-    public List readFile(InputStream inputStream, Class bean) throws Exception {
+    public List readFile(MultipartFile file, Class bean) throws Exception {
         List<R> rows = null;
         try {
             ExcelSheetDescriptor<R> sheetDescriptor = new ExcelSheetDescriptor<>(bean);
-            rows = readSheet(inputStream, sheetDescriptor);
+            rows = readSheet(file, sheetDescriptor);
         } catch (InstantiationException | IllegalAccessException | IOException e) {
             logger.error("Error in file read operation {}", e.getMessage());
             throw e;
         }
         return rows;
     }
-   /* public List<R> readFile(InputStream inputStream, Class<R> bean) throws Exception {
-        List<R> rows = null;
-        try {
-            ExcelSheetDescriptor<R> sheetDescriptor = new ExcelSheetDescriptor<>(bean);
-            rows = readSheet(inputStream, sheetDescriptor);
-        } catch (InstantiationException | IllegalAccessException | IOException e) {
-            logger.error("Error in file read operation {}", e.getMessage());
-            throw e;
-        }
-        return rows;
 
-    }*/
-
-    private <R> List<R> readSheet(InputStream fileStream, ExcelSheetDescriptor<R> sheetDescriptor) throws IOException, InstantiationException, IllegalAccessException {
+    private <R> List<R> readSheet(MultipartFile file, ExcelSheetDescriptor<R> sheetDescriptor) throws IOException, InstantiationException, IllegalAccessException {
         List<R> excelRecords = new ArrayList<>();
-        try (XSSFWorkbook workbook = new XSSFWorkbook(fileStream)) {
-            XSSFSheet sheet = workbook.getSheetAt(0);
+        try (Workbook workbook = ExcelUtil.getWorkBook.apply(file)) {
+            Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rowIt = sheet.iterator();
             int currentRowIndex = 0;
             while (rowIt.hasNext()) {

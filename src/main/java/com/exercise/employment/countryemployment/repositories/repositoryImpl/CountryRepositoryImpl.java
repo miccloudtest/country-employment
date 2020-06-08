@@ -1,7 +1,7 @@
 package com.exercise.employment.countryemployment.repositories.repositoryImpl;
 
-import com.exercise.employment.countryemployment.beans.CountryStateIDMaster;
 import com.exercise.employment.countryemployment.beans.CountryData;
+import com.exercise.employment.countryemployment.beans.CountryStateIDMaster;
 import com.exercise.employment.countryemployment.constants.SqlQueryConstant;
 import com.exercise.employment.countryemployment.repositories.repository.CountryRepository;
 import org.slf4j.Logger;
@@ -84,7 +84,7 @@ public class CountryRepositoryImpl implements CountryRepository {
 
     @Override
     public List<CountryData> getCountriesData() {
-        return namedParameterJdbcTemplate.query(SqlQueryConstant.SELECT_COUNTRY_STATE_MASTER_DATA, new BeanPropertyRowMapper<>(CountryData.class));
+        return namedParameterJdbcTemplate.query(SqlQueryConstant.SELECT_COUNTRY_STATE_DATA, new BeanPropertyRowMapper<>(CountryData.class));
     }
 
     private int[] batchInsert(List<CountryData> record) {

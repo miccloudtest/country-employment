@@ -1,6 +1,6 @@
 package com.exercise.employment.countryemployment.annotations;
-import com.exercise.employment.countryemployment.utils.CellParser.CellParser;
-import com.exercise.employment.countryemployment.utils.CellParser.DefaultCellParser;
+import com.exercise.employment.countryemployment.utils.excel.CellParser;
+import com.exercise.employment.countryemployment.utils.excel.DefaultCellParser;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.FIELD;

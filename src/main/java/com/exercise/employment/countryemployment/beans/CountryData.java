@@ -1,7 +1,10 @@
 package com.exercise.employment.countryemployment.beans;
 
 import com.exercise.employment.countryemployment.annotations.ExcelColumn;
+import com.exercise.employment.countryemployment.utils.serializers.CustomDoubleSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import java.io.Serializable;
@@ -22,21 +25,20 @@ public class CountryData<R> implements Serializable {
     @ExcelColumn(name = "Population")
     private Long statePopulation;
     @ExcelColumn(name = "NoOfEmployed")
-    private Long stateNumOfEmployed;
+    private Long stateNumEmployed;
     @ExcelColumn(name = "Area")
     private Integer stateArea;
-    @JsonIgnore
+    @JsonSerialize(using = CustomDoubleSerializer.class)
     private Double employmentRate;
     @JsonIgnore
     private Integer countryId;
     @JsonIgnore
     private Integer stateId;
-    @JsonIgnore
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss" ,locale = "en-IN")
     private Date created_ts;
-    @JsonIgnore
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss",locale = "en-IN")
+
     private Date modified_ts;
-    @JsonIgnore
     private String created_by;
-    @JsonIgnore
     private String modified_by;
 }
