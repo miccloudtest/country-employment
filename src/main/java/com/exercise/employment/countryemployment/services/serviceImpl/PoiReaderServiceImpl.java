@@ -1,7 +1,8 @@
-package com.exercise.employment.countryemployment.services;
+package com.exercise.employment.countryemployment.services.serviceImpl;
 
 import com.exercise.employment.countryemployment.annotations.ExcelColumn;
 import com.exercise.employment.countryemployment.beans.ExcelSheetDescriptor;
+import com.exercise.employment.countryemployment.services.service.PoiReaderService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -19,10 +20,22 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class POIReaderService<R> {
-    Logger logger = LoggerFactory.getLogger(POIReaderService.class);
+public class PoiReaderServiceImpl<R> implements PoiReaderService {
+    Logger logger = LoggerFactory.getLogger(PoiReaderServiceImpl.class);
 
-    public List<R> readFile(InputStream inputStream, Class<R> bean) throws Exception {
+    @Override
+    public List readFile(InputStream inputStream, Class bean) throws Exception {
+        List<R> rows = null;
+        try {
+            ExcelSheetDescriptor<R> sheetDescriptor = new ExcelSheetDescriptor<>(bean);
+            rows = readSheet(inputStream, sheetDescriptor);
+        } catch (InstantiationException | IllegalAccessException | IOException e) {
+            logger.error("Error in file read operation {}", e.getMessage());
+            throw e;
+        }
+        return rows;
+    }
+   /* public List<R> readFile(InputStream inputStream, Class<R> bean) throws Exception {
         List<R> rows = null;
         try {
             ExcelSheetDescriptor<R> sheetDescriptor = new ExcelSheetDescriptor<>(bean);
@@ -33,7 +46,7 @@ public class POIReaderService<R> {
         }
         return rows;
 
-    }
+    }*/
 
     private <R> List<R> readSheet(InputStream fileStream, ExcelSheetDescriptor<R> sheetDescriptor) throws IOException, InstantiationException, IllegalAccessException {
         List<R> excelRecords = new ArrayList<>();
@@ -71,5 +84,6 @@ public class POIReaderService<R> {
         }
         return excelRecords;
     }
+
 
 }

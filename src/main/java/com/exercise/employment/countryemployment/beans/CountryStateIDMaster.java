@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CountryStateMapping implements Serializable {
+public class CountryStateIDMaster implements Serializable {
     private static final long serialVersionUID = -7897700658518315266L;
     private Integer countryId;
     private String countryName;
