@@ -3,7 +3,6 @@ server:
   servlet:
     context-path: /country-employment
 
-
 # Oracle configuration
 spring:
   datasource:
@@ -15,8 +14,7 @@ spring:
       connection-timeout: 60000
       maximum-pool-size: 5
 
-
-
+#application messages
 app:
   file:
     upload:
