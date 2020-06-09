@@ -113,7 +113,8 @@ public class CountryServiceImpl implements CountryService {
             String statusMsg = (excelRecord.getValidRecords().size() > 0 && excelRecord.getInValidRecords().size() == 0)
                     ? SUCCESS_MSG : (excelRecord.getValidRecords().size() == 0 && excelRecord.getInValidRecords().size() != 0)
                     ? FILE_UPLOAD_FAIL_MSG : PARTIAL_SUCCESS_MSG;
-            response = ResponseMessage.builder().message(statusMsg).statusCode(HttpStatus.OK.value()).invalidRecords(excelRecord.getInValidRecords()).insertedRecords(excelRecord.getValidRecords()).build();
+            /*response = ResponseMessage.builder().message(statusMsg).statusCode(HttpStatus.OK.value()).invalidRecords(excelRecord.getInValidRecords()).insertedRecords(excelRecord.getValidRecords()).build();*/
+            response = ResponseMessage.builder().message(statusMsg).statusCode(HttpStatus.OK.value()).body(excelRecord).build();
         } else {
             response = ResponseMessage.builder().message(FILE_ERR_MSG).statusCode(HttpStatus.BAD_REQUEST.value()).build();
         }

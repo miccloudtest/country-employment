@@ -24,3 +24,7 @@ app:
         fail: Partial file uploaded successfully.
         partialSuccess: Partial file uploaded successfully.
         internalServerError: Error occurred while processing file.
+  request:
+    success: Request proceed successfully.
+    notfound: No data found.
+    error: Internal server error

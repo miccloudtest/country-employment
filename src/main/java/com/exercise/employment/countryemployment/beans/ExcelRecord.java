@@ -1,5 +1,6 @@
 package com.exercise.employment.countryemployment.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +11,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode
 public class ExcelRecord {
+    @JsonIgnore
     private List<CountryData> validRecords;
     private List<CountryData> inValidRecords;
     private List<CountryData> insertRecords;

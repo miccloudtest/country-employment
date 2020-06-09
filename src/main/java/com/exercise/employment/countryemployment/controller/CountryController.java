@@ -22,14 +22,15 @@ public class CountryController {
     Logger logger = LoggerFactory.getLogger(CountryController.class);
     @Autowired
     CountryService countryService;
-
-    @Value("${app.file.upload.message.internalServerError}")
-    private String SERVER_ERROR;
-
+    @Value("${app.request.notfound}")
+    public String DATA_NOT_FOUND;
+    @Value("${app.request.success}")
+    public String SUCCESS;
+    @Value("${app.request.error}")
+    public String SERVER_ERROR;
 
     @PostMapping("excelupload")
     @ResponseBody
-
     public ResponseEntity<ResponseMessage> uploadExcel(@RequestParam("user") String userData, @RequestParam("file") MultipartFile file) {
         ResponseMessage responseMessage;
         ResponseEntity responseEntity;
@@ -37,7 +38,7 @@ public class CountryController {
             User user = new ObjectMapper().readValue(userData, User.class);
             responseMessage = countryService.processFile(file, user);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body(responseMessage);
-            logger.info("Requested process status for file {} ,{}", file.getOriginalFilename(),responseMessage.getMessage());
+            logger.info("Requested process status for file {} ,{}", file.getOriginalFilename(), responseMessage.getMessage());
         } catch (Exception ex) {
             logger.error("Error while uploading file {}", ex.getMessage());
             responseMessage = ResponseMessage.builder().message(SERVER_ERROR).statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).build();
@@ -50,9 +51,23 @@ public class CountryController {
     @GetMapping("countries")
     @ResponseBody
     public ResponseEntity getCountriesData() {
-        List<CountryData> countryData = countryService.getCountriesData();
-        logger.info("Request process successfully");
-        return ResponseEntity.status(HttpStatus.OK).body(countryData);
+        List<CountryData> countryData = null;
+        String message = "";
+        try {
+            countryData = countryService.getCountriesData();
+            message = !countryData.isEmpty() ? SUCCESS : DATA_NOT_FOUND;
+            return ResponseEntity.status(HttpStatus.OK).
+                    body(ResponseMessage.builder()
+                            .statusCode(HttpStatus.OK.value()).
+                                    message(message).body(countryData).build());
+
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body(ResponseMessage.builder()
+                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).
+                                    message(SERVER_ERROR).build());
+        }
+
     }
 
 }
