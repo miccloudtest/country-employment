@@ -56,12 +56,14 @@ public class CountryController {
         try {
             countryData = countryService.getCountriesData();
             message = !countryData.isEmpty() ? SUCCESS : DATA_NOT_FOUND;
+            logger.info("Request Proceed successfully, record count-{}",countryData.size());
             return ResponseEntity.status(HttpStatus.OK).
                     body(ResponseMessage.builder()
                             .statusCode(HttpStatus.OK.value()).
                                     message(message).body(countryData).build());
 
         } catch (Exception ex) {
+            logger.error("Error while processing request {}",ex.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body(ResponseMessage.builder()
                             .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value()).
