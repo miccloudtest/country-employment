@@ -17,4 +17,6 @@ public interface CountryRepository {
     void updateBatchExecute(List<CountryData> excelRecord);
 
     List<CountryData> getCountriesData();
+
+    void exceCountryStateBackUpProc();
 }

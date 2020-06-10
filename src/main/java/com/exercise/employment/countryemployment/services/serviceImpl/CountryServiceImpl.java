@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,10 @@ public class CountryServiceImpl implements CountryService {
         return countryState != null ? countryState.getStateName().equalsIgnoreCase(state.trim()) : false;
     };
 
+    Consumer<String> doBackUp = message -> {
+        if(message.equalsIgnoreCase(SUCCESS_MSG)||message.equalsIgnoreCase(PARTIAL_SUCCESS_MSG))
+            countryRepository.exceCountryStateBackUpProc();
+    };
 
 
     private ExcelRecord processExcelData(List<CountryData> excelRecords, User user) throws Exception {
@@ -114,6 +119,7 @@ public class CountryServiceImpl implements CountryService {
             String statusMsg = (excelRecord.getValidRecords().size() > 0 && excelRecord.getInValidRecords().size() == 0)
                     ? SUCCESS_MSG : (excelRecord.getValidRecords().size() == 0 && excelRecord.getInValidRecords().size() != 0)
                     ? FILE_UPLOAD_FAIL_MSG : PARTIAL_SUCCESS_MSG;
+            doBackUp.accept(statusMsg);
             /*response = ResponseMessage.builder().message(statusMsg).statusCode(HttpStatus.OK.value()).invalidRecords(excelRecord.getInValidRecords()).insertedRecords(excelRecord.getValidRecords()).build();*/
             response = ResponseMessage.builder().message(statusMsg).statusCode(HttpStatus.OK.value()).body(excelRecord).build();
         } else {

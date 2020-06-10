@@ -92,3 +92,39 @@ insert into state_master VALUES(45,'Lohore',3);
 insert into state_master VALUES(46,'Rawalpindi',3);
 insert into state_master VALUES(47,'State-A',3);
 insert into state_master VALUES(48,'State-B',3);
+
+CREATE OR REPLACE PROCEDURE backup_country_state_data_proc AS
+BEGIN
+    DELETE FROM backup_con_state_data;
+
+    INSERT INTO backup_con_state_data (
+        country_name,
+        state_name,
+        state_area,
+        state_num_employed,
+        state_population,
+        created_by,
+        modified_by,
+        created_ts,
+        modified_ts,
+        is_deleted,
+        employment_rate
+    )
+        SELECT
+            cm.country_name,
+            sm.state_name,
+            csmd.state_area,
+            csmd.state_num_employed,
+            csmd.state_population,
+            csmd.created_by,
+            csmd.modified_by,
+            csmd.created_ts,
+            csmd.modified_ts,
+            csmd.is_deleted,
+            csmd.employment_rate
+        FROM
+            country_state_mapping_data   csmd
+            INNER JOIN state_master                 sm ON csmd.state_id = sm.state_id
+            INNER JOIN country_master               cm ON sm.country_id = cm.country_id;
+
+END backup_country_state_data_proc;

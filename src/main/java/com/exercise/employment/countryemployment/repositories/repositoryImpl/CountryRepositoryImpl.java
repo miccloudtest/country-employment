@@ -9,16 +9,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.CallableStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 public class CountryRepositoryImpl implements CountryRepository {
@@ -35,11 +37,7 @@ public class CountryRepositoryImpl implements CountryRepository {
     @Override
     public Map<Integer, Integer> getExistingCountryStateId(Set<Integer> states) {
         Map<Integer, Integer> map = new HashMap<>();
-        /*String query = SqlQueryConstant.SELECT_COUNTRY_STATE_ID;
-        String queryParam = states.stream().map(String::valueOf).collect(Collectors.joining(","));
-        query = query.replace(":data", queryParam);
-        */
-        insertBatchTempTable(states);
+        doBatchInsertLocalTable(states);
         return namedParameterJdbcTemplate.query(SqlQueryConstant.SELECT_COUNTRY_STATE_ID, new ResultSetExtractor<Map>() {
             @Override
             public Map extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -86,6 +84,19 @@ public class CountryRepositoryImpl implements CountryRepository {
         return namedParameterJdbcTemplate.query(SqlQueryConstant.SELECT_COUNTRY_STATE_DATA, new BeanPropertyRowMapper<>(CountryData.class));
     }
 
+    @Override
+    public void exceCountryStateBackUpProc() {
+        namedParameterJdbcTemplate.getJdbcTemplate().call(new CallableStatementCreator() {
+            @Override
+            public CallableStatement createCallableStatement(Connection connection)
+                    throws SQLException {
+                CallableStatement callableStatement = connection.prepareCall("{call backup_country_state_data_proc()}");
+                return callableStatement;
+
+            }
+        }, new ArrayList<>());
+    }
+
     private int[] batchInsert(List<CountryData> record) {
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(record.toArray());
         int[] insertCount = namedParameterJdbcTemplate.batchUpdate(SqlQueryConstant.INSERT_COUNTRY_STATE_DATA, batch);
@@ -97,23 +108,16 @@ public class CountryRepositoryImpl implements CountryRepository {
         int[] updateCounts = namedParameterJdbcTemplate.batchUpdate(SqlQueryConstant.UPDATE_COUNTRY_STATE_DATA, batch);
         return updateCounts;
     }
-    private  int[] insertBatchTempTable(Set<Integer> stateIds){
 
-       // SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(ids.toArray());
-        SqlParameterSource[] params = new SqlParameterSource[stateIds.size()];
-
+    private int[] doBatchInsertLocalTable(Set<Integer> stateIds) {
         final Map<String, Integer>[] ids = new Map[stateIds.size()];
-       /* for (int i = 0; i < data.length; i++) {
-            ids[i]=Collections.singletonMap("id",data[i]);
-        }*/
         Iterator<Integer> data = stateIds.iterator();
-        int i=0;
-        while (data.hasNext()){
+        int i = 0;
+        while (data.hasNext()) {
             ids[i] = Collections.singletonMap("id", data.next());
             i++;
         }
-
-        int[] insertCount = namedParameterJdbcTemplate.batchUpdate(SqlQueryConstant.INSERT_STATE_IDS,ids);
+        int[] insertCount = namedParameterJdbcTemplate.batchUpdate(SqlQueryConstant.INSERT_STATE_IDS, ids);
         return insertCount;
 
     }
