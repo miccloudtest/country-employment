@@ -17,10 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -38,10 +35,12 @@ public class CountryRepositoryImpl implements CountryRepository {
     @Override
     public Map<Integer, Integer> getExistingCountryStateId(Set<Integer> states) {
         Map<Integer, Integer> map = new HashMap<>();
-        String query = SqlQueryConstant.SELECT_COUNTRY_STATE_ID;
+        /*String query = SqlQueryConstant.SELECT_COUNTRY_STATE_ID;
         String queryParam = states.stream().map(String::valueOf).collect(Collectors.joining(","));
         query = query.replace(":data", queryParam);
-        return namedParameterJdbcTemplate.query(query, new ResultSetExtractor<Map>() {
+        */
+        insertBatchTempTable(states);
+        return namedParameterJdbcTemplate.query(SqlQueryConstant.SELECT_COUNTRY_STATE_ID, new ResultSetExtractor<Map>() {
             @Override
             public Map extractData(ResultSet rs) throws SQLException, DataAccessException {
                 HashMap<Integer, Integer> stateCountryId = new HashMap<Integer, Integer>();
@@ -97,5 +96,25 @@ public class CountryRepositoryImpl implements CountryRepository {
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(record.toArray());
         int[] updateCounts = namedParameterJdbcTemplate.batchUpdate(SqlQueryConstant.UPDATE_COUNTRY_STATE_DATA, batch);
         return updateCounts;
+    }
+    private  int[] insertBatchTempTable(Set<Integer> stateIds){
+
+       // SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(ids.toArray());
+        SqlParameterSource[] params = new SqlParameterSource[stateIds.size()];
+
+        final Map<String, Integer>[] ids = new Map[stateIds.size()];
+       /* for (int i = 0; i < data.length; i++) {
+            ids[i]=Collections.singletonMap("id",data[i]);
+        }*/
+        Iterator<Integer> data = stateIds.iterator();
+        int i=0;
+        while (data.hasNext()){
+            ids[i] = Collections.singletonMap("id", data.next());
+            i++;
+        }
+
+        int[] insertCount = namedParameterJdbcTemplate.batchUpdate(SqlQueryConstant.INSERT_STATE_IDS,ids);
+        return insertCount;
+
     }
 }
