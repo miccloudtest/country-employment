@@ -37,6 +37,9 @@ CREATE TABLE Country_State_Mapping_Data (
 ALTER TABLE Country_State_Mapping_Data
 ADD employment_rate FLOAT NOT NULL;
 
+CREATE GLOBAL TEMPORARY TABLE state_id_tmp
+    (id INT NOT NULL)
+  ON COMMIT PRESERVE ROWS;
 
 insert into country_master VALUES(1,'India');
 insert into country_master VALUES(2,'Nepal');
